@@ -18,7 +18,7 @@ import { TxMonitorService } from './services/tx-monitor.service';
 import { MonitorTransactionsJob } from './jobs/monitor-transactions.job';
 import { PartialCloseService } from './partial-close/partial-close.service';
 import { TradeHistoryService } from './trade-history.service';
-import { TradeLatencyService } from './services/trade-latency.service';
+import { TradeOutcomeService } from './trade-outcome.service';
 
 @Module({
   imports: [
@@ -42,9 +42,9 @@ import { TradeLatencyService } from './services/trade-latency.service';
     IcebergOrderService,
     PartialCloseService,
     TradeHistoryService,
-    TradeLatencyService,
+    TradeOutcomeService,
   ],
-  exports: [TradesService, RiskManagerService, OcoOrderService, IcebergOrderService, PartialCloseService, TradeHistoryService, TradeLatencyService],
+  exports: [TradesService, RiskManagerService, OcoOrderService, IcebergOrderService, PartialCloseService, TradeHistoryService, TradeOutcomeService],
 })
 export class TradesModule { }
 
