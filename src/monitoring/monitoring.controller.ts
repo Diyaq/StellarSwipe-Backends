@@ -13,6 +13,12 @@ export class MonitoringController {
     private readonly circuitBreaker: CircuitBreakerService,
   ) {}
 
+  /**
+   * Prometheus scrape endpoint.
+   * Returns all registered metrics in the Prometheus text exposition format.
+   * Includes: HTTP timings, error rates, Bull queue sizes, cache stats, DB pool,
+   * and business counters — all labelled by endpoint and service type.
+   */
   @Get()
   @Header('Content-Type', 'text/plain; version=0.0.4; charset=utf-8')
   @ApiOperation({ summary: 'Prometheus metrics scrape endpoint' })
