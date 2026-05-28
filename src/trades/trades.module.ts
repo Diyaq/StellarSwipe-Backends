@@ -19,6 +19,11 @@ import { MonitorTransactionsJob } from './jobs/monitor-transactions.job';
 import { PartialCloseService } from './partial-close/partial-close.service';
 import { TradeHistoryService } from './trade-history.service';
 import { TradeOutcomeService } from './trade-outcome.service';
+import { TradeAuditService } from './trade-audit.service';
+import { TradeAuditController } from './trade-audit.controller';
+import { ConfirmationPollingService } from './services/confirmation-polling.service';
+import { AuditModule } from '../audit-log/audit.module';
+import { NotificationsModule } from '../notifications/notifications.module';
 
 @Module({
   imports: [
@@ -29,8 +34,10 @@ import { TradeOutcomeService } from './trade-outcome.service';
       name: 'transactions',
     }),
     WebsocketModule,
+    AuditModule,
+    NotificationsModule,
   ],
-  controllers: [TradesController, AdvancedOrdersController],
+  controllers: [TradesController, AdvancedOrdersController, TradeAuditController],
   providers: [
     TradesService,
     RiskManagerService,
@@ -43,8 +50,10 @@ import { TradeOutcomeService } from './trade-outcome.service';
     PartialCloseService,
     TradeHistoryService,
     TradeOutcomeService,
+    TradeAuditService,
+    ConfirmationPollingService,
   ],
-  exports: [TradesService, RiskManagerService, OcoOrderService, IcebergOrderService, PartialCloseService, TradeHistoryService, TradeOutcomeService],
+  exports: [TradesService, RiskManagerService, OcoOrderService, IcebergOrderService, PartialCloseService, TradeHistoryService, TradeOutcomeService, TradeAuditService, ConfirmationPollingService],
 })
 export class TradesModule { }
 
