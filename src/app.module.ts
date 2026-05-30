@@ -68,6 +68,7 @@ import { NotificationsModule } from './notifications/notifications.module';
 import { AuditModule } from './audit-log/audit.module';
 import { SocialExportModule } from './social-export/social-export.module';
 import { QuotaReportingModule } from './multitenancy/quota-reporting/quota-reporting.module';
+import { MarketDataHistoryModule } from './market-data/history/market-data-history.module';
 
 @Module({
   imports: [
@@ -169,6 +170,7 @@ import { QuotaReportingModule } from './multitenancy/quota-reporting/quota-repor
     SecurityMonitoringModule,
     AccessControlModule,
     QuotaReportingModule,
+    MarketDataHistoryModule,
     KycModule,
     ProductAnalyticsModule,
     BackupModule,
