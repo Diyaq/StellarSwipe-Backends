@@ -40,6 +40,7 @@ import { SecurityModule } from './security/security.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { SecurityMonitoringModule } from './security/security-monitoring.module';
 import { AccessControlModule } from './security/access-control/access-control.module';
+import { EncryptedStorageModule } from './storage/encryption/encrypted-storage.module';
 import { KycModule } from './kyc/kyc.module';
 import { ProductAnalyticsModule } from './analytics/product-analytics.module';
 import { BackupModule } from './backup/backup.module';
@@ -170,6 +171,7 @@ import { ContractsModule } from './contracts/contracts.module';
     SecurityModule,
     SecurityMonitoringModule,
     AccessControlModule,
+    EncryptedStorageModule,
     QuotaReportingModule,
     MarketDataHistoryModule,
     ContractsModule,
