@@ -20,6 +20,7 @@ import { SubscribePremiumDto, UpdatePremiumSignalDto } from './dto/premium-signa
 import { Signal } from './entities/signal.entity';
 import { I18nAppService } from '../i18n/i18n.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { CreateSignalDto } from './dto';
 
 @Controller('signals')
 export class SignalsController {
@@ -31,7 +32,7 @@ export class SignalsController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  async createSignal(@Body() body: any, @Req() req: any): Promise<Signal> {
+  async createSignal(@Body() body: CreateSignalDto, @Req() req: any): Promise<Signal> {
     try {
       return await this.signalsService.create(body);
     } catch (error) {
