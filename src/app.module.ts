@@ -54,6 +54,8 @@ import { CompetitionsModule } from './competitions/competitions.module';
 import { NftModule } from './nft/nft.module';
 import { HealthModule } from './health/health.module';
 import { RateLimitModule } from './common/rate-limit.module';
+import { RateLimitMiddleware } from './common/middleware/rate-limit.middleware';
+import { LeaderboardModule } from './leaderboard/leaderboard.module';
 // feature/295-discord-community-integration
 import { DiscordBotModule } from './integrations/discord/discord-bot.module';
 
@@ -172,6 +174,7 @@ import { FreighterModule } from './freighter/freighter.module';
     ApiMonetizationModule,
     SlaModule,
     ProvidersModule,
+    LeaderboardModule,
     MlModule,
     ScalingModule,
     VersioningModule,
@@ -226,7 +229,7 @@ import { FreighterModule } from './freighter/freighter.module';
     WalletModule,
     FreighterModule,
   ],
-  providers: [StellarConfigService],
+  providers: [StellarConfigService, RateLimitMiddleware],
   exports: [StellarConfigService],
 })
 export class AppModule { }
