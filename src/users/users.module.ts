@@ -5,11 +5,12 @@ import { UserPreference } from './entities/user-preference.entity';
 import { Session } from './entities/session.entity';
 import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
+import { CacheInvalidationService } from '../cache/cache-invalidation.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, UserPreference, Session])],
   controllers: [UsersController],
-  providers: [UsersService],
+  providers: [UsersService, CacheInvalidationService],
   exports: [UsersService, TypeOrmModule],
 })
 export class UsersModule { }

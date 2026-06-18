@@ -10,6 +10,7 @@ import { UserPreference } from './entities/user-preference.entity';
 import { Session } from './entities/session.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdatePreferenceDto } from './dto/update-preference.dto';
+import { CacheInvalidationService } from '../cache/cache-invalidation.service';
 
 @Injectable()
 export class UsersService {
@@ -20,6 +21,7 @@ export class UsersService {
         private readonly preferenceRepository: Repository<UserPreference>,
         @InjectRepository(Session)
         private readonly sessionRepository: Repository<Session>,
+        private readonly cacheInvalidation: CacheInvalidationService,
     ) { }
 
     async createUser(createUserDto: CreateUserDto): Promise<User> {
@@ -104,24 +106,27 @@ export class UsersService {
     ): Promise<UserPreference> {
         const user = await this.findByWalletAddress(walletAddress);
 
+        let result: UserPreference;
         if (!user.preference) {
             const preference = this.preferenceRepository.create({
                 userId: user.id,
                 ...updatePreferenceDto,
             });
-            return this.preferenceRepository.save(preference);
+            result = await this.preferenceRepository.save(preference);
+        } else {
+            await this.preferenceRepository.update(user.preference.id, updatePreferenceDto);
+            const updatedPreference = await this.preferenceRepository.findOne({
+                where: { id: user.preference.id },
+            });
+            if (!updatedPreference) {
+                throw new NotFoundException('Preference not found');
+            }
+            result = updatedPreference;
         }
 
-        await this.preferenceRepository.update(user.preference.id, updatePreferenceDto);
-        const updatedPreference = await this.preferenceRepository.findOne({
-            where: { id: user.preference.id },
-        });
-
-        if (!updatedPreference) {
-            throw new NotFoundException('Preference not found');
-        }
-
-        return updatedPreference;
+        // Write-through invalidation: evict stale user profile cache
+        await this.cacheInvalidation.invalidateUserPreferences(user.id);
+        return result;
     }
 
     async getPreferences(walletAddress: string): Promise<UserPreference> {
@@ -205,7 +210,10 @@ export class UsersService {
         }
 
         user.walletAddress = walletAddress;
-        return this.userRepository.save(user);
+        const saved = await this.userRepository.save(user);
+        // Invalidation hook: evict profile cache after wallet update
+        await this.cacheInvalidation.invalidateUserProfile(userId);
+        return saved;
     }
 
     async updatePassword(userId: string, hashedPassword: string): Promise<void> {
