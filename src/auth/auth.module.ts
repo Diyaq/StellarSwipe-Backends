@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { WsJwtAuthGuard } from './guards/ws-jwt-auth.guard';
 import { CacheModule } from '@nestjs/cache-manager';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../users/entities/user.entity';
@@ -45,6 +46,7 @@ import { SessionCleanupService } from './session/session-cleanup.service';
     AuthService,
     JwtStrategy,
     JwtAuthGuard,
+    WsJwtAuthGuard,
     TwitterOauthService,
     TwoFactorService,
     AuthAuditService,
@@ -54,6 +56,7 @@ import { SessionCleanupService } from './session/session-cleanup.service';
   exports: [
     AuthService,
     JwtAuthGuard,
+    WsJwtAuthGuard,
     TwitterOauthService,
     TwoFactorService,
     AuthAuditService,
