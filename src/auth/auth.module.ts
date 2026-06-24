@@ -21,6 +21,9 @@ import { AuthAuditService } from './auth-audit.service';
 import { AuditModule } from '../audit-log/audit.module';
 import { SessionManagerService } from './session/session-manager.service';
 import { SessionCleanupService } from './session/session-cleanup.service';
+import { WebauthnCredential } from './webauthn/entities/webauthn-credential.entity';
+import { WebauthnService } from './webauthn/webauthn.service';
+import { WebauthnController } from './webauthn/webauthn.controller';
 
 @Module({
   imports: [
@@ -37,11 +40,11 @@ import { SessionCleanupService } from './session/session-cleanup.service';
     }),
     CacheModule,
     AuditModule,
-    TypeOrmModule.forFeature([User, SocialConnection, TwoFactor]),
+    TypeOrmModule.forFeature([User, SocialConnection, TwoFactor, WebauthnCredential]),
     UsersModule,
     EmailModule,
   ],
-  controllers: [AuthController, SocialAuthController, TwoFactorController],
+  controllers: [AuthController, SocialAuthController, TwoFactorController, WebauthnController],
   providers: [
     AuthService,
     JwtStrategy,
@@ -52,6 +55,7 @@ import { SessionCleanupService } from './session/session-cleanup.service';
     AuthAuditService,
     SessionManagerService,
     SessionCleanupService,
+    WebauthnService,
   ],
   exports: [
     AuthService,
@@ -61,6 +65,7 @@ import { SessionCleanupService } from './session/session-cleanup.service';
     TwoFactorService,
     AuthAuditService,
     SessionManagerService,
+    WebauthnService,
   ],
 })
 export class AuthModule {}
