@@ -4,3 +4,4 @@ export {
   RATE_LIMIT,
   type RateLimitOptions,
 } from './rate-limit.decorator';
+export { IsStellarAddress, IsStellarPublicKey } from './is-stellar-address.decorator';

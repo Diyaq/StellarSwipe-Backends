@@ -35,6 +35,8 @@ import { SwipeController } from './swipe/swipe.controller';
 import { SwipeService } from './swipe/swipe.service';
 import { MarketOrderService } from './services/market-order.service';
 import { MarketOrderController } from './market-order.controller';
+import { BatchOrderController } from './batch-order.controller';
+import { BatchOrderService } from './batch-order.service';
 
 @Module({
   imports: [
@@ -50,10 +52,11 @@ import { MarketOrderController } from './market-order.controller';
     AuditModule,
     NotificationsModule,
   ],
-  controllers: [TradesController, AdvancedOrdersController, LimitOrderController, SwipeController, MarketOrderController],
+  controllers: [TradesController, AdvancedOrdersController, LimitOrderController, SwipeController, MarketOrderController, BatchOrderController],
   providers: [
     TradesService,
     MarketOrderService,
+    BatchOrderService,
     RiskManagerService,
     TradeExecutorService,
     StellarConfigService,
